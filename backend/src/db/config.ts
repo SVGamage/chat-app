@@ -1,0 +1,31 @@
+import "reflect-metadata";
+import { DataSource } from "typeorm";
+import dotenv from "dotenv";
+import { User } from "../models/user.model";
+import { Chat } from "../models/chat.model";
+import { Message } from "../models/message.model";
+dotenv.config();
+
+const AppDataSource = new DataSource({
+  type: "postgres",
+  //   ssl: { rejectUnauthorized: false },
+  //   migrations: [],
+  //   url: process.env.DB_URL,
+  username: process.env.DB_USER,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWD,
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  entities: [User, Chat, Message],
+  synchronize: false,
+  logging: false,
+});
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("connected..");
+  })
+  .catch((error) => {
+    console.error(error, "unable to connect..");
+  });
+export default AppDataSource;
