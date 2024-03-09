@@ -17,7 +17,7 @@ const AppDataSource = new DataSource({
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   entities: [User, Chat, Message],
-  synchronize: false,
+  synchronize: true,
   logging: false,
 });
 

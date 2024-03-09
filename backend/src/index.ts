@@ -6,6 +6,7 @@ import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes";
+
 dotenv.config();
 
 const app: Application = express();
@@ -26,6 +27,6 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 
-server.listen(5000, () => {
+server.listen(3002, () => {
   console.log("server is running on port: 5000");
 });
