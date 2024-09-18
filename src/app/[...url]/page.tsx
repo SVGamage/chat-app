@@ -1,3 +1,4 @@
+import { ChatWindow } from "@/components/ChatWindow";
 import { ragChat } from "@/lib/rag-chat";
 import { redis } from "@/lib/redis";
 import { reconstructURLs } from "@/utils/helperFunctions";
@@ -9,7 +10,10 @@ interface PageProps {
 }
 export default async function Page({ params }: PageProps) {
   const reconstructedURL = reconstructURLs(params.url as string[]);
-  const isUrlAlreadyExists = redis.sismember("indexed-urls", reconstructedURL);
+  const isUrlAlreadyExists = await redis.sismember(
+    "indexed-urls",
+    reconstructedURL
+  );
   if (!isUrlAlreadyExists) {
     await ragChat.context.add({
       type: "html",
@@ -21,5 +25,5 @@ export default async function Page({ params }: PageProps) {
     });
     await redis.sadd("indexed-urls", reconstructedURL);
   }
-  return <div>{params.url}</div>;
+  return <ChatWindow sessionId="mock-id" />;
 }
