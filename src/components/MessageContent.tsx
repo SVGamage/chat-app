@@ -9,7 +9,7 @@ export function MessageContent({
     <div
       className={cn("p-3 rounded-lg", {
         "bg-primary text-primary-foreground": message.role === "user",
-        "bg-secondary text-secondary-foreground": message.role === "ai",
+        "bg-secondary text-secondary-foreground": message.role !== "user",
       })}
     >
       {message.content}
