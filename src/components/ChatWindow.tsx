@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Messages } from "@/components/Messages";
+import { Textarea } from "@/components/ui/textarea";
+import { Send } from "lucide-react";
 
 export function ChatWindow() {
   const [messages, setMessages] = useState([
@@ -41,13 +43,17 @@ export function ChatWindow() {
           }}
           className="flex w-full items-center space-x-2"
         >
-          <Input
-            type="text"
-            placeholder="Type your message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <Button type="submit">Send</Button>
+          <div className="relative w-full ">
+            <Textarea
+              placeholder="Type your message..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="resize-none min-h-[100px] pr-14"
+            />
+            <Button type="submit" className="absolute bottom-2 right-2">
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </form>
       </CardFooter>
     </Card>
