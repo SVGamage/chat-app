@@ -19,6 +19,7 @@ export default async function Page({ params }: PageProps) {
         chunkSize: 200,
       },
     });
+    await redis.sadd("indexed-urls", reconstructedURL);
   }
   return <div>{params.url}</div>;
 }
