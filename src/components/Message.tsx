@@ -17,7 +17,7 @@ export function Message({ message }: IMessage) {
       }`}
     >
       <div
-        className={cn("flex flex-col", {
+        className={cn("flex flex-col max-w-md", {
           "items-end": message.sender === "user",
           "items-start": message.sender === "ai",
         })}
