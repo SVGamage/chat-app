@@ -1,28 +1,26 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MessageAvatar } from "@/components/MessageAvatar";
 import { MessageContent } from "@/components/MessageContent";
 interface IMessage {
   message: {
-    text: string;
-    sender: string;
+    content: string;
+    role: string;
   };
 }
 export function Message({ message }: IMessage) {
   return (
     <div
       className={`flex mb-4 ${
-        message.sender === "user" ? "justify-end" : "justify-start"
+        message.role === "user" ? "justify-end" : "justify-start"
       }`}
     >
       <div
-        className={cn("flex flex-col max-w-md", {
-          "items-end": message.sender === "user",
-          "items-start": message.sender === "ai",
+        className={cn("flex flex-col w-full", {
+          "items-end": message.role === "user",
+          "items-start": message.role !== "user",
         })}
       >
-        <MessageAvatar sender={message.sender} />
+        <MessageAvatar sender={message.role} />
         <MessageContent message={message} />
       </div>
     </div>

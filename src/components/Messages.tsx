@@ -1,40 +1,29 @@
-import { useState } from "react";
 import { Message } from "@/components/Message";
+import { type Message as IMessage } from "ai/react";
+import { useEffect, useRef } from "react";
+interface MessagesProps {
+  messages: IMessage[];
+}
+export function Messages({ messages }: MessagesProps) {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-export function Messages() {
-  const [messages, setMessages] = useState([
-    { text: "Hello! How can I assist you today?", sender: "ai" },
-    {
-      text: "I'm here to help you with any questions or tasks you may have.",
-      sender: "user",
-    },
-    {
-      text: "I'm here to help you with any questions or tasks you may have.",
-      sender: "user",
-    },
-    {
-      text: "I'm here to help you with any questions or tasks you may have.",
-      sender: "user",
-    },
-    {
-      text: "I'm here to help you with any questions or tasks you may have.",
-      sender: "user",
-    },
-    {
-      text: "I'm here to help you with any questions or tasks you may have.",
-      sender: "user",
-    },
-    {
-      text: "I'm here to help you with any questions or tasks you may have.",
-      sender: "user",
-    },
-    { text: "Hello! How can I assist you today?", sender: "ai" },
-  ]);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   return (
     <>
-      {messages.map((message, index) => (
-        <Message key={index} message={message} />
-      ))}
+      {messages ? (
+        messages.map((message, index) => (
+          <Message key={index} message={message} />
+        ))
+      ) : (
+        <div>No Conversations</div>
+      )}
+      <div ref={messagesEndRef} />
     </>
   );
 }
