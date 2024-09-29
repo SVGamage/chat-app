@@ -9,15 +9,22 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Messages } from "@/components/Messages";
-import { useChat } from "ai/react";
+import { Message, useChat } from "ai/react";
 import ChatInputForm from "./ChatInputForm";
 
-export function ChatWindow({ sessionId }: { sessionId: string }) {
+export function ChatWindow({
+  sessionId,
+  history,
+}: {
+  sessionId: string;
+  history: Message[];
+}) {
   const { messages, handleInputChange, handleSubmit, input } = useChat({
     api: "/api/chat-stream",
     body: {
       sessionId,
     },
+    initialMessages: history,
   });
 
   return (

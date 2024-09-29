@@ -17,6 +17,11 @@ export default async function Page({ params }: PageProps) {
     "indexed-urls",
     reconstructedURL
   );
+
+  const history = await ragChat.history.getMessages({
+    amount: 10,
+    sessionId,
+  });
   if (!isUrlAlreadyExists) {
     await ragChat.context.add({
       type: "html",
@@ -28,5 +33,5 @@ export default async function Page({ params }: PageProps) {
     });
     await redis.sadd("indexed-urls", reconstructedURL);
   }
-  return <ChatWindow sessionId={sessionId} />;
+  return <ChatWindow sessionId={sessionId} history={history} />;
 }
