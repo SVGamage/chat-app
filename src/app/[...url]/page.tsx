@@ -2,6 +2,7 @@ import { ChatWindow } from "@/components/ChatWindow";
 import { ragChat } from "@/lib/rag-chat";
 import { redis } from "@/lib/redis";
 import { reconstructURLs } from "@/utils/helperFunctions";
+import { cookies } from "next/headers";
 
 interface PageProps {
   params: {
@@ -9,7 +10,9 @@ interface PageProps {
   };
 }
 export default async function Page({ params }: PageProps) {
+  const cookie = cookies().get("sessionId")?.value;
   const reconstructedURL = reconstructURLs(params.url as string[]);
+  const sessionId = (reconstructedURL + "--" + cookie).replace(/\//g, "");
   const isUrlAlreadyExists = await redis.sismember(
     "indexed-urls",
     reconstructedURL
@@ -25,5 +28,5 @@ export default async function Page({ params }: PageProps) {
     });
     await redis.sadd("indexed-urls", reconstructedURL);
   }
-  return <ChatWindow sessionId="mock-id" />;
+  return <ChatWindow sessionId={sessionId} />;
 }
